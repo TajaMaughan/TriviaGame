@@ -51,8 +51,8 @@ const questions = [
         answer: "a"
     }
 ];
-
-var timer = 6;
+//declare variables;
+var timer = 10;
 var intervalId;
 var answers;
 var output;
@@ -70,10 +70,10 @@ function countDown() {
     timer--;
     $("#timer").html("<p>" + timer + "</p>")
     if (timer == 0) {
-        clearInterval(intervalId);
-        $("#quizHide").hide();
         //showResults();
-        getValues();
+        $("#results").append("<div>Times up!</div>")
+        showResults();
+
     }
 }
 //show quiz function
@@ -91,7 +91,7 @@ function showQuiz(question, quizContainer) {
     output = output.join('');
     $("#quiz").append(output);
 }
-
+//retrieve user input
 function getValues() {
     values = [];
     for (j = 0; j < answers.length + 1; j++) {
@@ -101,7 +101,7 @@ function getValues() {
     }
     console.log(values);
 }
-
+//check user input against answers
 function checkValues() {
     for (k = 0; k < questions.length; k++) {
         if (questions[k].answer === values[k]) {
@@ -113,21 +113,6 @@ function checkValues() {
         }
     }
 }
-
-/*function showResults() {
-    for (j = 0; j < answers.length; j++) {
-        //answers = 
-        var input = answers.push(document.querySelector("input[name='" + j + "'"))
-    
-        //var value = $(".answer").val();
-        console.log(input);
-    }
-}*/
-
-//on the results page show number of questions answered correctly, incorrectly, or not answered.
-//give the user the option to restart the quiz.
-
-
 //start button to begin quiz
 $("body").on("click", "#startButton", function startButton() {
     $("#startButton").hide();
@@ -136,8 +121,14 @@ $("body").on("click", "#startButton", function startButton() {
     countDown();
     //shows quiz    
     showQuiz();
-    // when the timer lapses or the user submits the quiz, show results
-
 })
-
-$("body").on("click", "#submitButton", showResults)
+//on the results page show number of questions answered correctly, incorrectly, or not answered.
+$("body").on("click", "#submitButton", function showResults() {
+    $("#quizHide").hide();
+    clearInterval(intervalId);
+    getValues();
+    checkValues();
+    $("#results").append("Correct: " + correctAnswers + "<br>");
+    $("#results").append("Incorrect: " + incorrectAnswers + "<br>");
+    $("#results").append("Unanswered: " + unanswered + "<br>"); 
+})
