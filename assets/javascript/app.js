@@ -145,7 +145,7 @@ function showQuiz(question, quizContainer) {
 //retrieve user input
 function getValues() {
     values = [];
-    for (j = 0; j < answers.length + 1; j++) {
+    for (j = 0; j < questions.length; j++) {
         var selectedAnswer = $("input[name=answer" + [j] + "]:checked").val()
         values.push(selectedAnswer);
 
