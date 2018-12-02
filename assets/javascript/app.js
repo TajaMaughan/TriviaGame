@@ -1,58 +1,108 @@
 //create an object to hold the questions and answers.
 const questions = [
     {
-        question: "This is question 1?",
+        question: "In <i>The Sword and the Stone</i>, what does Merlin call the greatest force on earth?",
         options: {
-            a: "1-a",
-            b: "1-b",
-            c: "1-c",
-            d: "1-d",
+            a: "Magic ",
+            b: "Love ",
+            c: "Family ",
+            d: "The Sword ",
+        },
+        answer: "b"
+    },
+    {
+        question: "What is the name of Belle's horse in <i>Beauty and the Beast</i>?",
+        options: {
+            a: "Philippe",
+            b: "Johnson",
+            c: "Napoleon",
+            d: "Alexander",
         },
         answer: "a"
     },
     {
-        question: "This is question 2?",
+        question: "In <i>Aladdin</i>, how many years was Genie trapped in the lamp?",
         options: {
-            a: "2-a",
-            b: "2-b",
-            c: "2-c",
-            d: "2-d",
+            a: "50",
+            b: "2,000",
+            c: "6",
+            d: "10,000",
+        },
+        answer: "d"
+    },
+    {
+        question: "How many Disney cruise ships are there?",
+        options: {
+            a: "2",
+            b: "8",
+            c: "4",
+            d: "6",
+        },
+        answer: "c"
+    },
+    {
+        question: "In <i>Monsters, Inc.</i>, what is Boo's real name?",
+        options: {
+            a: "Mary",
+            b: "Justine",
+            c: "Jessica",
+            d: "Matilda",
         },
         answer: "a"
     },
     {
-        question: "This is question 3?",
+        question: "What is Wall-E's favorite musical?",
         options: {
-            a: "3-a",
-            b: "3-b",
-            c: "3-c",
-            d: "3-d",
+            a: "<i>Camelot</i>",
+            b: "<i>Paint Your Wagon</i>",
+            c: "<i>Seven Brides for Seven Brothers</i>",
+            d: "<i>Hello, Dolly!</i>",
+        },
+        answer: "d"
+    },
+    {
+        question: "What were Mickey and Minnie's original names?",
+        options: {
+            a: "Manuel and Missy",
+            b: "Mortimer and Minerva",
+            c: "Matthew and Madeline",
+            d: "Micah and Mabel",
+        },
+        answer: "b"
+    },
+    {
+        question: "In <i>101 Dalmations</i>, how many puppies on Pongo and Perdita start out with?",
+        options: {
+            a: "6",
+            b: "12",
+            c: "15",
+            d: "8",
+        },
+        answer: "c"
+    },
+    {
+        question: "Which Disney Princess has the least amount of lines?",
+        options: {
+            a: "Aurora",
+            b: "Rapunzel",
+            c: "Belle",
+            d: "Jasmine",
         },
         answer: "a"
     },
     {
-        question: "This is question 4?",
+        question: "Which Disney Princess has a star on the Hollywood Walk of Fame?",
         options: {
-            a: "4-a",
-            b: "4-b",
-            c: "4-c",
-            d: "4-d",
+            a: "Merida",
+            b: "Cinderella",
+            c: "Pocahontas",
+            d: "Snow White",
         },
-        answer: "a"
-    },
-    {
-        question: "This is question 5?",
-        options: {
-            a: "5-a",
-            b: "5-b",
-            c: "5-c",
-            d: "5-d",
-        },
-        answer: "a"
+        answer: "d"
     }
 ];
 //declare variables;
-var timer = 10;
+var timer = 60;
 var intervalId;
 var answers;
 var output;
@@ -68,10 +118,10 @@ function timerStart() {
 //decrement timer function
 function countDown() {
     timer--;
-    $("#timer").html("<p>" + timer + "</p>")
+    $("#timer").html("<p>Time remaining: " + timer + "</p>")
     if (timer == 0) {
         //showResults();
-        $("#results").append("<div>Times up!</div>")
+        $("#results").append("<div><p>Times up!</p></div>")
         showResults();
 
     }
@@ -83,13 +133,14 @@ function showQuiz(question, quizContainer) {
     for (i = 0; i < questions.length; i++) {
         answers = [];
         for (letter in questions[i].options) {
-            answers.push('<label>' + '<input type="radio" name="answer' + [i] + '"' + 'value="' + letter + '">' + letter + ': ' + questions[i].options[letter] + '</label><br>')
+            answers.push('<label>' + '<input type="radio" name="answer' + [i] + '"' + 'value="' + letter + '">' + letter + ': &nbsp' + questions[i].options[letter] + '&nbsp </label>')
         };
 
-        output.push('<div class="question">' + questions[i].question + '</div>' + '<div class="answers">' + answers.join('') + '</div>');
+        output.push('<div class="question"><p>' + questions[i].question + '</p></div>' + '<div class="answers"><p>' + answers.join('') + '</p></div>');
     }
     output = output.join('');
     $("#quiz").append(output);
+    $("#quizHide").append('<div><button id="submitButton">Submit</button></div>')
 }
 //retrieve user input
 function getValues() {
@@ -123,12 +174,14 @@ $("body").on("click", "#startButton", function startButton() {
     showQuiz();
 })
 //on the results page show number of questions answered correctly, incorrectly, or not answered.
-$("body").on("click", "#submitButton", function showResults() {
+function showResults() {
     $("#quizHide").hide();
     clearInterval(intervalId);
     getValues();
     checkValues();
-    $("#results").append("Correct: " + correctAnswers + "<br>");
-    $("#results").append("Incorrect: " + incorrectAnswers + "<br>");
-    $("#results").append("Unanswered: " + unanswered + "<br>"); 
-})
+    $("#results").append("<p>Correct: " + correctAnswers + "</p>");
+    $("#results").append("<p>Incorrect: " + incorrectAnswers + "</p>");
+    $("#results").append("<p>Unanswered: " + unanswered + "</p>"); 
+}
+//submit button
+$("body").on("click", "#submitButton", showResults)

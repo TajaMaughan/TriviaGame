@@ -1,0 +1,29 @@
+body {
+    background: url("../images/mickeymouse.jpg"); 
+    font-family: 'Grand Hotel', cursive;
+}
+
+#container {
+    background-color: #83192d;
+    width: 60vw;
+    margin: 5% 19vw !important;
+    padding: 3%;
+    border-width: 1vw;
+    border-style: solid;
+    border-color: #211b29;
+    margin: auto;
+    text-align: center;
+    color: #ddb464;
+}
+
+button {
+    font-family: 'Grand Hotel', cursive;
+}
+
+label {
+    spacing: 1%;
+}
+
+p {
+    font-family: 'Aref Ruqaa', serif;
+}
